@@ -1,8 +1,8 @@
-const fileName = "toDoEntries";
-
 const maxEntries = 32;
 const maxNameLength = 32;
 
+
+const fileName = "toDoEntries";
 
 const entries = [];
 const storedEntries = JSON.parse(localStorage.getItem(fileName));
@@ -35,8 +35,6 @@ function Trim(string){
 }
 
 
-
-
 add_entry.addEventListener("click", () => {
 	trimmedName = Trim(new_entry.value);
 	if (trimmedName.length > maxNameLength) {
@@ -44,7 +42,7 @@ add_entry.addEventListener("click", () => {
 		console.log("Error: name too long.")
 	} else {
 		error.innerText = "";
-		CreateEntry(trimmedName)
+		CreateEntry(trimmedName, false)
 	}
 });
 new_entry.addEventListener("keyup", () => {key = false});
@@ -56,17 +54,17 @@ new_entry.addEventListener("keydown", event => {
 	} else {
 		error.innerText = "";
 		if (!key && event.key == "Enter") {
-			CreateEntry(trimmedName);
+			CreateEntry(trimmedName, false);
 			key = true
-		}	
+		}
 	}
 });
 
 console.log(entries);
 
 if (storedEntries != undefined && storedEntries != [] && storedEntries != null && storedEntries != 0 && storedEntries.length > 0) {
-	for (let name of storedEntries) {
-		CreateEntry(name)
+	for (let entry of storedEntries) {
+		CreateEntry(entry[0], entry[1])
 	}
 }
 
@@ -76,11 +74,11 @@ function SaveEntries () {
 	if (entries.length > 0) {
 		localStorage.setItem(fileName, JSON.stringify(entries))
 	} else {
-		localStorage.removeItem(fileName);
+		localStorage.removeItem(fileName)
 	}
 }
 
-function CreateEntry (name) {
+function CreateEntry (name, mark) {
 	if (name != "") {
 		if (!entries.includes(name)) {
 			if (entries.length < maxEntries) {
@@ -90,7 +88,7 @@ function CreateEntry (name) {
 					menu_main.appendChild(entry_list)
 				}
 
-				entries.push(name);
+				entries.push([name, false]);
 			
 				const menu_entry = document.createElement("div");
 				menu_entry.classList.add("menu_entry");
@@ -102,7 +100,17 @@ function CreateEntry (name) {
 						const menu_input = document.createElement("input");
 						menu_input.setAttribute("id", "menu_item" + String(entries.length));
 						menu_input.setAttribute("type", "checkbox");
-
+						menu_input.checked = mark;
+						let entryName = menu_entry.getAttribute("id");
+						let entryId = entries.findIndex(entry => {return entry[0] == entryName});
+						entries[entryId][1] = menu_input.checked;
+						menu_input.addEventListener("change", () => {
+							let entryName = menu_entry.getAttribute("id");
+							let entryId = entries.findIndex(entry => {return entry[0] == entryName});
+							entries[entryId][1] = menu_input.checked;
+							SaveEntries();
+							console.log(entries)
+						});
 						const menu_label = document.createElement("label");
 						menu_label.setAttribute("for", "menu_item" + String(entries.length));
 						menu_label.innerText = name
@@ -180,7 +188,9 @@ function CreateEntry (name) {
 									})
 									function ReplaceEntry(name) {
 										menu_label.innerText = name;
-										entries.splice(entries.indexOf(menu_entry.getAttribute("id")), 1, name);
+										let entryName = menu_entry.getAttribute("id");
+										let entryId = entries.findIndex(entry => {return entry[0] == entryName});
+										entries.splice(entryId, 1, [name, entries[entryId][1]]);
 										menu_entry.setAttribute("id", name);
 										entry_list.replaceChild(menu_entry, menu_edit);
 										SaveEntries();
@@ -196,7 +206,9 @@ function CreateEntry (name) {
 
 							menu_button2.appendChild(menu_icon2);
 							menu_button2.addEventListener("click", () => {
-								entries.splice(entries.indexOf(menu_entry.getAttribute("id")), 1);
+								let entryName = menu_entry.getAttribute("id");
+								let entryId = entries.findIndex(entry => {return entry[0] == entryName});
+								entries.splice(entryId, 1);
 								menu.style.height = String(menu_height + entries.length * entry_height) + "px";
 								entry_list.removeChild(menu_entry);
 								if (entries.length == 0){
