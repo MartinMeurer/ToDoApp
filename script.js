@@ -220,6 +220,7 @@ function CreateEntry (name, mark) {
 								if (entries.length == 0){
 									entry_list.remove()
 								}
+								error.innerText = "";
 								SaveEntries();
 								console.log(entries)
 							});
