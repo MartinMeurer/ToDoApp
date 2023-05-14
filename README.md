@@ -1,4 +1,4 @@
-<h1>ToDo App</h1>
+<h1 align="center">ToDo App</h1>
 
 A full implementation in html / css and JavaScript. The list is dynamically built by JS code via DOM.
 
