@@ -1,6 +1,6 @@
 <h1>ToDo App</h1>
 
-<p>A full implementation in HTML / CSS and JavaScript.</p>
+<p>A full implementation in HTML, CSS and JavaScript.</p>
  
 <p>The list is dynamically built by JS code via DOM, so that the menu adapts to the list size.</p>
 
