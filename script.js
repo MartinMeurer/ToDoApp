@@ -227,10 +227,10 @@ function CreateEntry (name, mark) {
 						menu_actions.appendChild(menu_button1);
 						menu_actions.appendChild(menu_button2);
 
-				menu_entry.appendChild(menu_item);
-				menu_entry.appendChild(menu_actions);
+					menu_entry.appendChild(menu_item);
+					menu_entry.appendChild(menu_actions);
+					menu_entry.style.height = String(entry_height) + "px";
 
-				menu_entry.style.height = String(entry_height) + "px";
 				menu.style.height = String(menu_height + entries.length * entry_height) + "px";
 
 				entry_list.appendChild(menu_entry);
