@@ -78,9 +78,15 @@ function SaveEntries () {
 	}
 }
 
+function Includes (name) {
+	return entries.some(entry => {
+		return entry[0] == name
+	})
+}
+
 function CreateEntry (name, mark) {
 	if (name != "") {
-		if (!entries.includes(name)) {
+		if (!Includes(name)) {
 			if (entries.length < maxEntries) {
 				if (entries.length == 0) {
 					entry_list = document.createElement("div");
@@ -150,7 +156,7 @@ function CreateEntry (name, mark) {
 									menu_edit_button.addEventListener("click", () => {
 										trimmedName = Trim(menu_edit_input.value);
 										if (trimmedName != "") {
-											if (trimmedName == menu_label.innerText || !entries.includes(trimmedName)) {
+											if (trimmedName == menu_label.innerText || !Includes(trimmedName)) {
 												ReplaceEntry(trimmedName)
 											} else {
 												error.innerText ="Entry with this name already exists.";
@@ -170,7 +176,7 @@ function CreateEntry (name, mark) {
 											error.innerText = "";
 											if (event.key == "Enter") {
 												if (trimmedName != "") {
-													if (trimmedName == menu_label.innerText || !entries.includes(trimmedName)) {
+													if (trimmedName == menu_label.innerText || !Includes(trimmedName)) {
 														ReplaceEntry(trimmedName);
 													} else {
 														error.innerText ="Entry with this name already exists.";
