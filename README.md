@@ -6,5 +6,5 @@
 
 <p>It has thorough Sanity Checks, Exception & Error Handling for the user input.</p>
 
-<p>There are subtle conveniences built into the behavior, via pre-emptive focus <br>
+<p>There are subtle conveniences built into the behavior, via pre-emptive focus on relevant input fields<br>
  and keyboard shortcuts, such as pressing Enter instead clicking Button, and Escape to leave Edit mode.</p>
