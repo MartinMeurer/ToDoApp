@@ -62,7 +62,7 @@ new_entry.addEventListener("keydown", event => {
 
 console.log(entries);
 
-if (storedEntries != undefined && storedEntries != [] && storedEntries != null && storedEntries != 0 && storedEntries.length > 0) {
+if (storedEntries != undefined && storedEntries != null && storedEntries != 0 && storedEntries != [] && storedEntries.length > 0) {
 	for (let entry of storedEntries) {
 		CreateEntry(entry[0], entry[1])
 	}
